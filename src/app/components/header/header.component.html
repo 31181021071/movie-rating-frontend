@@ -1,0 +1,14 @@
+<p-menubar [model]="items">
+    <ng-template pTemplate="end">
+        <div class="flex flex-wrap justify-content-center gap-3" *ngIf="!authUser">
+            <p-button label="Sign up" [raised]="true" severity="secondary" (onClick)="openDialogSignup()" icon="pi pi-plus-circle"></p-button>
+            <p-button label="Sign in" [raised]="true" severity="success" (onClick)="openDialogSignin()" icon="pi pi-sign-in"></p-button>
+        </div>
+        <div class="flex flex-wrap justify-content-center gap-3" *ngIf="authUser">
+            <p-avatar icon="pi pi-user" styleClass="mr-2" shape="circle" (click)="menuProfileLogin.toggle($event)"></p-avatar>
+            <p-overlayPanel #menuProfileLogin>
+                <p-menu [model]="itemsMenuProfile" class="bg-light"></p-menu>
+              </p-overlayPanel>
+        </div>
+    </ng-template>
+</p-menubar>

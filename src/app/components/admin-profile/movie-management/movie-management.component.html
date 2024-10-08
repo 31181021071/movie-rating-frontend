@@ -1,0 +1,17 @@
+<div>
+    <div class="grid">
+        <div class="flex flex-row flex-wrap gap-2">
+            <label for="movieName">Movie name</label>
+            <input id="movieName" type="text" pInputText [(ngModel)]="movieSearchCondition.movieName" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="col-4">
+            <label for="country">Country</label>
+            <p-multiSelect id="country" [options]="listCountry" optionLabel="codeName" display="chip" [showClear]="true" [(ngModel)]="movieSearchCondition.country" styleClass="w-100"></p-multiSelect>
+        </div>
+        <div class="col-4">
+            <label for="releaseYear">Release year</label>            
+            <p-multiSelect id="releaseYear" [options]="listReleaseYear" optionLabel="codeName" display="chip" [showClear]="true" [(ngModel)]="movieSearchCondition.releassYear" class="w-full"></p-multiSelect>
+        </div>
+    </div>
+
+</div>

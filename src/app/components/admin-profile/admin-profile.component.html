@@ -1,0 +1,22 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <h2>ADMIN PAGE</h2>
+        <p-tabView (onChange)="onTabChange($event)">
+            <p-tabPanel header="Profile">
+                <ng-container *ngIf="activeTab === 0">
+                    <!-- <app-profile-admin></app-profile-admin> -->
+                </ng-container>
+            </p-tabPanel>
+            <p-tabPanel header="User Management">
+                <ng-container *ngIf="activeTab === 1">
+                    <!-- <app-user-management></app-user-management> -->
+                </ng-container>
+            </p-tabPanel>
+            <p-tabPanel header="Movie Management">
+                <ng-container *ngIf="activeTab === 2">
+                    <app-movie-management></app-movie-management>
+                </ng-container>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+</div>

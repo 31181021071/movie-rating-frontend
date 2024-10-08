@@ -1,0 +1,23 @@
+<div class="bg-red-400 mb-3 p-3 border-round text-white" *ngIf="showErrorMessage">
+    <li *ngFor="let errorMessage of errorMessages"> {{ errorMessage }}</li>
+</div>
+
+<div class="field">
+    <label for="displayname">Display name<span class="required">*</span></label>
+    <input id="displayname" type="text" pInputText [(ngModel)]="signUpModel.name" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+</div>
+<div class="field">
+    <label for="email">Email<span class="required">*</span></label>
+    <input id="email" type="text" pInputText [(ngModel)]="signUpModel.email" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+</div>
+<div class="field">
+    <label for="password">Password<span class="required">*</span></label>
+    <input id="password" type="password" pInputText [(ngModel)]="signUpModel.password" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+</div>
+<div class="field">
+    <label for="confirmpassword">Confirm Password<span class="required">*</span></label>
+    <input id="confirmpassword" type="password" pInputText [(ngModel)]="signUpModel.confirmPassword" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+</div>
+<div class="field">
+    <p-button label="Sign in" [raised]="true" severity="primary" (onClick)="signUp()"></p-button>
+</div>
