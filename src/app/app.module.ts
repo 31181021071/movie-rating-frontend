@@ -28,7 +28,12 @@ import { AuthActivateRouteGuard } from './routeGuard/auth.routeguard';
 import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
 import { TabViewModule } from 'primeng/tabview';
 import { MovieManagementComponent } from './components/admin-profile/movie-management/movie-management.component';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { PaginatorModule } from 'primeng/paginator';
+import { TableModule } from 'primeng/table';
+import { MovieDetailComponent } from './components/admin-profile/movie-management/movie-detail/movie-detail.component';
+import { EditorModule } from 'primeng/editor';
 
 @NgModule({
   declarations: [
@@ -39,9 +44,14 @@ import { MultiSelectModule } from 'primeng/multiselect';
     SigninComponent,
     UserProfileComponent,
     AdminProfileComponent,
-    MovieManagementComponent
+    MovieManagementComponent,
+    MovieDetailComponent
   ],
   imports: [
+    EditorModule,
+    TableModule,
+    PaginatorModule,
+    InputNumberModule,
     MultiSelectModule,
     TabViewModule,
     MenuModule,

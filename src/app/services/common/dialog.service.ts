@@ -13,7 +13,7 @@ export class ShareDialogService {
   openDialog(component: any, params: any) {
     const ref = this.dialogService.open(component, {
       header: params.title,
-      width: params.width || '600px',
+      width: params.width || '50vw',
       dismissableMask: false,
       maximizable: true,
       modal: true,

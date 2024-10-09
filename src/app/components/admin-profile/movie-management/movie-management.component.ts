@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieSearchCondition } from 'src/app/models/admin-profile/admin-profile.model';
+import { ShareDialogService } from 'src/app/services/common/dialog.service';
+import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 
 @Component({
   selector: 'app-movie-management',
@@ -12,8 +14,62 @@ export class MovieManagementComponent implements OnInit {
 
   listCountry = [];
   listReleaseYear = [];
+  listGenre = [];
+  listIsShow = [
+    {
+      code: true,
+      codeName: "Show"
+    },
+    {
+      code: false,
+      codeName: "Not Show"
+    }
+  ];
 
-  constructor(){}
+  movieList = [
+    {
+      id: 1,
+      movieName: 'Inception',
+      country: 'USA',
+      releaseYear: 2010,
+      rating: 8.8,
+    },
+    {
+      id: 2,
+      movieName: 'Parasite',
+      country: 'South Korea',
+      releaseYear: 2019,
+      rating: 8.6,
+    },
+    {
+      id: 3,
+      movieName: 'The Shawshank Redemption',
+      country: 'USA',
+      releaseYear: 1994,
+      rating: 9.3,
+    },
+    {
+      id: 4,
+      movieName: 'Spirited Away',
+      country: 'Japan',
+      releaseYear: 2001,
+      rating: 8.6,
+    },
+    {
+      id: 5,
+      movieName: 'Amélie',
+      country: 'France',
+      releaseYear: 2001,
+      rating: 8.3,
+    },
+  ];
+
+  size = 50;
+  totalRecord = 200;
+
+  constructor(
+    private dialogService: ShareDialogService
+  ){}
 
 
   ngOnInit(): void {
@@ -31,5 +87,25 @@ export class MovieManagementComponent implements OnInit {
       years.push({ code: year, codeName: year });
     }
     return years;
+  }
+
+  onSearch() {
+    console.log(this.movieSearchCondition);
+  }
+
+  onClear() {
+    this.movieSearchCondition = {};
+  }
+
+  openDialogDetail(movie?: any) {
+    let param = {
+      title: "Movie Detail",
+      data: movie
+    }
+    this.dialogService.openDialog(MovieDetailComponent, param);
+  }
+
+  onChangePage(event: any) {
+    console.log(event);
   }
 }

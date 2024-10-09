@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 interface City {
   name: string;
   code: string;
@@ -12,7 +11,6 @@ interface City {
 export class HomeComponent implements OnInit{
 
   constructor(
-    private translate: TranslateService
   ) {
   }
 

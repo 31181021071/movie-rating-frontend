@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent},
   { path: 'user-profile', component: UserProfileComponent , canActivate: [AuthActivateRouteGuard]},
-  { path: 'admin-profile', component: AdminProfileComponent , canActivate: [AuthActivateRouteGuard]}
+  { path: 'admin-profile', component: AdminProfileComponent}
 ];
 
 @NgModule({

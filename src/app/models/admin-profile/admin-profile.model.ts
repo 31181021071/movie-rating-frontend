@@ -1,22 +1,32 @@
-import { Mcodes } from "../mcodes.model";
-
 export interface MovieSearchCondition {
     movieName?: string;
-    country?: Mcodes[];
-    releassYear?: Mcodes[];
-    genre?: Mcodes[];
+    country?: string[];
+    releaseYear?: number[];
+    genre?: string[];
     ratingFrom?: number;
     ratingTo?: number;
-    isShow?: boolean;
+    isShow?: boolean[];
 }
 
 export interface MovieSearchResult{
+    id?: number;
     movieName?: string;
     country?: string;
-    releassYear?: number;
+    releaseYear?: number;
     genre?: string;
     rating?: number;
     isShow?: boolean;
+}
+
+export interface MovieDetail{
+    id?: number;
+    movieName?: string;
+    country?: string;
+    releaseYear?: number;
+    genre?: string[];
+    rating?: number;
+    isShow?: boolean;
+    description?: string;
 }
 
 

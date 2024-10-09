@@ -1,17 +1,72 @@
 <div>
-    <div class="grid">
-        <div class="flex flex-row flex-wrap gap-2">
+    <div class="formgrid grid">
+        <div class="field col-3">
             <label for="movieName">Movie name</label>
             <input id="movieName" type="text" pInputText [(ngModel)]="movieSearchCondition.movieName" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
         </div>
-        <div class="col-4">
+        <div class="field col-3">
             <label for="country">Country</label>
-            <p-multiSelect id="country" [options]="listCountry" optionLabel="codeName" display="chip" [showClear]="true" [(ngModel)]="movieSearchCondition.country" styleClass="w-100"></p-multiSelect>
+            <p-multiSelect id="country" [options]="listCountry" optionLabel="codeName" optionValue="code" display="chip" [filter]="true"
+            filterBy="codeName" [showClear]="true" [(ngModel)]="movieSearchCondition.country" [styleClass]="'w-full'"></p-multiSelect>
         </div>
-        <div class="col-4">
+        <div class="field col-3">
             <label for="releaseYear">Release year</label>            
-            <p-multiSelect id="releaseYear" [options]="listReleaseYear" optionLabel="codeName" display="chip" [showClear]="true" [(ngModel)]="movieSearchCondition.releassYear" class="w-full"></p-multiSelect>
+            <p-multiSelect id="releaseYear" [options]="listReleaseYear" optionLabel="codeName" optionValue="code" display="chip" [filter]="true"
+            filterBy="codeName" [showClear]="true" [(ngModel)]="movieSearchCondition.releaseYear" [styleClass]="'w-full'"></p-multiSelect>
+        </div>
+        <div class="field col-3">
+            <label for="genre">Genre</label>            
+            <p-multiSelect id="genre" [options]="listGenre" optionLabel="codeName" optionValue="code" display="chip" [filter]="true"
+            filterBy="codeName" [showClear]="true" [(ngModel)]="movieSearchCondition.genre" [styleClass]="'w-full'"></p-multiSelect>
         </div>
     </div>
-
+    <div class="formgrid grid">
+        <div class="field col-3">
+            <label for="ratingFrom">Rating From</label>
+            <p-inputNumber id="ratingFrom" styleClass="w-full" class="w-full" [(ngModel)]="movieSearchCondition.ratingFrom" inputId="minmax" mode="decimal" [min]="0" [max]="10" [maxFractionDigits]="1"> </p-inputNumber>
+        </div>
+        <div class="field col-3">
+            <label for="ratingTo">Rating To</label>
+            <p-inputNumber id="ratingTo" styleClass="w-full" class="w-full" [(ngModel)]="movieSearchCondition.ratingTo" inputId="minmax" mode="decimal" [min]="0" [max]="10" [maxFractionDigits]="1"> </p-inputNumber>
+        </div>
+        <div class="field col-3">
+            <label for="isShow">Is Show</label>            
+            <p-multiSelect id="isShow" [options]="listIsShow" optionLabel="codeName" optionValue="code" display="chip" [filter]="true"
+            filterBy="codeName" [showClear]="true" [(ngModel)]="movieSearchCondition.isShow" [styleClass]="'w-full'"></p-multiSelect>
+        </div>
+    </div>
+    <div class="flex flex-row flex-wrap justify-content-center gap-3">
+        <p-button label="Search" severity="primary" (onClick)="onSearch()" icon="pi pi-search"></p-button>
+        <p-button label="Clear" severity="danger" (onClick)="onClear()" icon="pi pi-times"></p-button>
+    </div>
+</div>
+<div>
+    <div class="flex flex-row flex-wrap justify-content-between">
+        <p-paginator [rows]="size" [totalRecords]="totalRecord" (onPageChange)="onChangePage($event)"></p-paginator>
+        <p-button label="New" severity="primary" (onClick)="openDialogDetail()" icon="pi pi-plus-circle"></p-button>
+    </div>
+    <div>
+        <p-table [value]="movieList" [tableStyle]="{'min-width': '50rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 10%;">ID</th>
+                    <th style="width: 50%;">Movie name</th>
+                    <th style="width: 10%;">Country</th>
+                    <th style="width: 10%;">Release Year</th>
+                    <th style="width: 10%;">Rating</th>
+                    <th style="width: 10%;">Action</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-movie>
+                <tr>
+                    <td style="width: 10%;">{{movie.id}}</td>
+                    <td style="width: 50%;">{{movie.movieName}}</td>
+                    <td style="width: 10%;">{{movie.country}}</td>
+                    <td style="width: 10%;">{{movie.releaseYear}}</td>
+                    <td style="width: 10%;">{{movie.rating}}</td>
+                    <td style="width: 10%;"><button type="button" (click)="openDialogDetail(movie)" pButton icon="pi pi-pencil" label="Edit"></button></td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
 </div>

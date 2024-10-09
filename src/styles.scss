@@ -1,4 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~primeng/resources/themes/saga-blue/theme.css";
+@import "~primeng/resources/primeng.min.css";
+@import "~primeicons/primeicons.css";
+@import "~primeflex/primeflex.css";
+@import "~quill/dist/quill.core.css";
+@import "~quill/dist/quill.snow.css";
+
+
 .required {
     color: red; /* Thay đổi màu sắc của ký hiệu */
 }
@@ -18,3 +26,56 @@ p-progressspinner {
     background: var(--maskbg);
 }
 
+.form-table {
+    border-spacing: 0px;
+    width: 100%;
+  }
+  
+  .form-table>tr>th {
+    padding: 0.25rem;
+    border: solid #dee2e6;
+    border-width: 0 0px 1px 0;
+    text-align: left;
+    vertical-align: middle;
+  }
+  
+  .form-table>tr>th+th {
+    border-left-width: 1px;
+  }
+  
+  .form-table>tr:first-child>th {
+    border-top: 1px solid #dee2e6;
+  }
+  
+  .form-table>tr>th:first-child {
+    border-left: 1px solid #dee2e6;
+  }
+  
+  .form-table>tr>th:last-child {
+    border-right-width: 1px !important;
+  }
+  
+  .form-table>tr>th {
+    background-color: #f2f2f2;
+  }
+  
+  .form-table>tr>th>label {
+    min-height: 36px;
+    display: block;
+    padding: 0 0.25rem;
+    text-align: right;
+    line-height: 2.5;
+    white-space: nowrap;
+  }
+  
+  .form-table>tr>td {
+    padding: 0.25rem;
+    border: solid #dee2e6;
+    border-width: 0 1px 1px 1px;
+    text-align: left;
+    vertical-align: middle;
+  }
+  
+  .form-table>tr:first-child>td {
+    border-top-width: 1px;
+  }
