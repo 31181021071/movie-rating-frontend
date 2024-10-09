@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MovieSearchCondition } from 'src/app/models/admin-profile/admin-profile.model';
 import { ShareDialogService } from 'src/app/services/common/dialog.service';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
+import { AdminProfileService } from 'src/app/services/admin-profile/admin-profile.service';
 
 @Component({
   selector: 'app-movie-management',
@@ -68,12 +69,16 @@ export class MovieManagementComponent implements OnInit {
   totalRecord = 200;
 
   constructor(
-    private dialogService: ShareDialogService
+    private dialogService: ShareDialogService,
+    public adminProfileService: AdminProfileService,
   ){}
 
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.listReleaseYear = this.generateReleaseYearArray();
+    // let resutlInit = await this.adminProfileService.getInitMovieManagement();
+    // this.listCountry = resutlInit.listCountry;
+    // this.listGenre = resutlInit.listGenre;
   }
 
   generateReleaseYearArray() {

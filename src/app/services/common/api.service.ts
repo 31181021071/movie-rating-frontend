@@ -56,7 +56,7 @@ export class ApiService {
       headers: this.createAuthorizationHeader()
     }).pipe(
       catchError(error => {
-        if (error.status = 403) {
+        if (error.status == 403) {
           localStorage.clear()
           this.router.navigateByUrl("/home");
         } else {
@@ -77,7 +77,7 @@ export class ApiService {
       headers: this.createAuthorizationHeader()
     }).pipe(
       catchError(error => {
-        if (error.status = 403) {
+        if (error.status == 403) {
           localStorage.clear()
           this.router.navigateByUrl("/home");
         } else {

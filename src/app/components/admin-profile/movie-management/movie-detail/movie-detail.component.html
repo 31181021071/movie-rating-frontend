@@ -1,11 +1,76 @@
 
 <div>
+    <div class="bg-red-400 mb-3 p-3 border-round text-white" *ngIf="showErrorMessage">
+        <li *ngFor="let errorMessage of errorMessages"> {{ errorMessage }}</li>
+    </div>
     <table class="form-table">
         <tr>
-            <th class="w-2">Movie Name: </th>
+            <th class="w-2">Poster: </th>
             <td colspan="5">
-                <input id="movieName" type="text" pInputText [(ngModel)]="movie.movieName" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                <p-image *ngIf="imageUrl" [src]="imageUrl" [alt]="altText" width="250" height="400" [preview]="true"></p-image>
+                <div class="flex flex-row align-items-center gap-3">
+                    <p-fileUpload
+                    #fileUpload
+                    name="file"
+                    accept="image/*"
+                    mode="basic"
+                    (onSelect)="onFileSelect($event)"
+                    chooseLabel="Choose image"
+                    cancelLabel="Cancel"
+                    ></p-fileUpload>
+                    <p-button label="Clear" icon="pi pi-times" (click)="clearFileSelection(fileUpload)" severity="danger"></p-button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th class="w-2">Movie Name<span class="required">*</span>: </th>
+            <td colspan="5">
+                <input type="text" maxlength="100" pInputText [(ngModel)]="movieDetail.movieName" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            </td>
+        </tr>
+        <tr>
+            <th class="w-2">Country<span class="required">*</span>: </th>
+            <td colspan="5">
+                <p-dropdown [options]="listCountry" [(ngModel)]="movieDetail.country" [styleClass]="'w-full'" [filter]="true" filterBy="codeName" optionLabel="codeName" optionValue="code"></p-dropdown>
+            </td>
+        </tr>
+        <tr>
+            <th class="w-2">Release Year: </th>
+            <td colspan="5">
+                <p-dropdown [options]="listReleaseYear" [(ngModel)]="movieDetail.releaseYear" [styleClass]="'w-full'" [filter]="true" filterBy="codeName" optionLabel="codeName" optionValue="code"></p-dropdown>
+            </td>
+        </tr>
+        <tr>
+            <th class="w-2">Genre<span class="required">*</span>: </th>
+            <td colspan="5">
+                <p-multiSelect [options]="listGenre" optionLabel="codeName" optionValue="code" display="chip" [filter]="true"
+                filterBy="codeName" [showClear]="true" [(ngModel)]="movieDetail.genre" [styleClass]="'w-full'"></p-multiSelect>
+            </td>
+        </tr>
+        <tr>
+            <th class="w-2">Show: </th>
+            <td colspan="5" class="flex flex-wrap gap-3">
+                <div class="flex align-items-center">
+                    <p-radioButton value="1" [(ngModel)]="movieDetail.isShow"></p-radioButton>
+                    <label class="ml-2">Yes</label>
+                </div>
+                
+                <div class="flex align-items-center">
+                    <p-radioButton value="2" [(ngModel)]="movieDetail.isShow"></p-radioButton>
+                    <label class="ml-2">No</label>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th class="w-2">Description<span class="required">*</span>: </th>
+            <td colspan="5">
+                <p-editor name="description" id="description" #quillEditor class="w-full" [style]="{ 'height': '40vh' }" [(ngModel)]="movieDetail.description"></p-editor>
             </td>
         </tr>
     </table>
+    <div class="flex flex-row justify-content-end gap-3 mt-3">
+        <p-button label="Cancel" severity="secondary" (onClick)="onCancel()" icon="pi pi-times"></p-button>
+        <p-button label="Delete" severity="danger" (onClick)="onDelete()" icon="pi pi-delete-left"></p-button>
+        <p-button label="Save" severity="primary" (onClick)="onSave()" icon="pi pi-save"></p-button>
+    </div>
 </div>

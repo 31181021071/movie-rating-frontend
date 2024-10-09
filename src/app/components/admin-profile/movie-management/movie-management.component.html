@@ -50,7 +50,8 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width: 10%;">ID</th>
-                    <th style="width: 50%;">Movie name</th>
+                    <th style="width: 20%;">Movie name</th>
+                    <th style="width: 30%;">Genre</th>
                     <th style="width: 10%;">Country</th>
                     <th style="width: 10%;">Release Year</th>
                     <th style="width: 10%;">Rating</th>
@@ -60,7 +61,8 @@
             <ng-template pTemplate="body" let-movie>
                 <tr>
                     <td style="width: 10%;">{{movie.id}}</td>
-                    <td style="width: 50%;">{{movie.movieName}}</td>
+                    <td style="width: 20%;">{{movie.movieName}}</td>
+                    <td style="width: 30%;">{{movie.genre}}</td>
                     <td style="width: 10%;">{{movie.country}}</td>
                     <td style="width: 10%;">{{movie.releaseYear}}</td>
                     <td style="width: 10%;">{{movie.rating}}</td>

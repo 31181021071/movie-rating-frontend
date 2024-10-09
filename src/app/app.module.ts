@@ -34,6 +34,9 @@ import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { MovieDetailComponent } from './components/admin-profile/movie-management/movie-detail/movie-detail.component';
 import { EditorModule } from 'primeng/editor';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,9 @@ import { EditorModule } from 'primeng/editor';
     MovieDetailComponent
   ],
   imports: [
+    ImageModule,
+    FileUploadModule,
+    RadioButtonModule,
     EditorModule,
     TableModule,
     PaginatorModule,

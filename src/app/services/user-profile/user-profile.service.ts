@@ -13,6 +13,6 @@ export class UserProfileService {
   ) { }
 
   getUserProfile(): Observable<any> {
-    return this.apiService.doGetWithJwt(AppConstants.API_URL + "hello");
+    return this.apiService.doGetWithJwt(AppConstants.API_AUTHEN_URL + "hello");
   }
 }
