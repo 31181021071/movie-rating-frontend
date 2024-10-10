@@ -51,9 +51,9 @@ export class SigninComponent {
       console.log(result);
       if (result.jwt) {
         const jwtToken = result.jwt;
-        localStorage.setItem(AppConstants.JWT, jwtToken);
+        sessionStorage.setItem(AppConstants.JWT, jwtToken);
         console.log(JSON.stringify(result.userInfo));
-        localStorage.setItem(AppConstants.USER_INFO, JSON.stringify(result.userInfo));
+        sessionStorage.setItem(AppConstants.USER_INFO, JSON.stringify(result.userInfo));
         location.reload();
       }
     })

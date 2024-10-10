@@ -20,7 +20,7 @@ export interface MovieSearchResult{
 
 export interface MovieDetail{
     id?: number;
-    img?: string;
+    img?: number[];
     movieName?: string;
     country?: string;
     releaseYear?: number;

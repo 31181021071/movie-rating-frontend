@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit {
       }
     ];
 
-    let jwtToken = localStorage.getItem(AppConstants.JWT);
+    let jwtToken = sessionStorage.getItem(AppConstants.JWT);
     if (jwtToken) {
       this.authUser = true;
     } else {
@@ -72,7 +72,7 @@ export class HeaderComponent implements OnInit {
   }
 
   handleProfileClick() {
-    let userInfoJson = localStorage.getItem(AppConstants.USER_INFO);
+    let userInfoJson = sessionStorage.getItem(AppConstants.USER_INFO);
     if (userInfoJson) {
       let userInfo = JSON.parse(userInfoJson);
       let role = userInfo.role;
@@ -85,7 +85,7 @@ export class HeaderComponent implements OnInit {
   }
 
   handleSignoutClick() {
-    localStorage.clear();
+    sessionStorage.clear();
     this.router.navigateByUrl('/').then(() => {
       location.reload();
     });

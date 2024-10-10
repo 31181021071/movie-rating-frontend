@@ -57,7 +57,7 @@ export class ApiService {
     }).pipe(
       catchError(error => {
         if (error.status == 403) {
-          localStorage.clear()
+          sessionStorage.clear()
           this.router.navigateByUrl("/home");
         } else {
           console.error('Error occurred:', error);
@@ -78,7 +78,7 @@ export class ApiService {
     }).pipe(
       catchError(error => {
         if (error.status == 403) {
-          localStorage.clear()
+          sessionStorage.clear()
           this.router.navigateByUrl("/home");
         } else {
           console.error('Error occurred:', error);
@@ -91,7 +91,7 @@ export class ApiService {
   }
 
   createAuthorizationHeader() {
-    const jwtToken = localStorage.getItem(AppConstants.JWT);
+    const jwtToken = sessionStorage.getItem(AppConstants.JWT);
 
     if (jwtToken) {
       return new HttpHeaders().set(

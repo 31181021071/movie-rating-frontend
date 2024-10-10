@@ -48,7 +48,13 @@
             </td>
         </tr>
         <tr>
-            <th class="w-2">Show: </th>
+            <th class="w-2">Rating: </th>
+            <td colspan="5">
+                <p-inputNumber [disabled]="true" styleClass="w-full" class="w-full" [(ngModel)]="movieDetail.rating" mode="decimal" [min]="0" [max]="10" [maxFractionDigits]="1"> </p-inputNumber>
+            </td>
+        </tr>
+        <tr>
+            <th class="w-2">Show<span class="required">*</span>: </th>
             <td colspan="5" class="flex flex-wrap gap-3">
                 <div class="flex align-items-center">
                     <p-radioButton value="1" [(ngModel)]="movieDetail.isShow"></p-radioButton>

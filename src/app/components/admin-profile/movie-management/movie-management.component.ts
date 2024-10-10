@@ -76,9 +76,9 @@ export class MovieManagementComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.listReleaseYear = this.generateReleaseYearArray();
-    // let resutlInit = await this.adminProfileService.getInitMovieManagement();
-    // this.listCountry = resutlInit.listCountry;
-    // this.listGenre = resutlInit.listGenre;
+    let resutlInit = await this.adminProfileService.getInitMovieManagement();
+    this.listCountry = resutlInit.listCountry;
+    this.listGenre = resutlInit.listGenre;
   }
 
   generateReleaseYearArray() {
@@ -105,7 +105,7 @@ export class MovieManagementComponent implements OnInit {
   openDialogDetail(movie?: any) {
     let param = {
       title: "Movie Detail",
-      data: movie
+      data: 1
     }
     this.dialogService.openDialog(MovieDetailComponent, param);
   }

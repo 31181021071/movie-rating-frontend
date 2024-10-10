@@ -79,3 +79,10 @@ p-progressspinner {
   .form-table>tr:first-child>td {
     border-top-width: 1px;
   }
+
+  p-inputnumber input:disabled {
+    background-color: #f0f0f0; /* Màu nền xám nhạt */
+    color: #999999; /* Màu chữ xám mờ */
+    border-color: #dcdcdc; /* Màu viền xám */
+  }
+  

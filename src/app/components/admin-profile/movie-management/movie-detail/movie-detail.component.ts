@@ -11,7 +11,7 @@ import { StringUtils } from 'src/app/utils/stringUtil';
 @Component({
   selector: 'app-movie-detail',
   templateUrl: './movie-detail.component.html',
-  styleUrls: ['./movie-detail.component.scss']
+  styleUrls: ['./movie-detail.component.scss'],
 })
 export class MovieDetailComponent implements OnInit {
   @ViewChild('editor', { static: false }) editor!: ElementRef;
@@ -24,34 +24,35 @@ export class MovieDetailComponent implements OnInit {
   showErrorMessage = false;
   errorMessages = [];
 
-  listCountry = [{code: "1", codeName: "Vietnam"}];
+  listCountry = [{ code: '1', codeName: 'Vietnam' }];
   listReleaseYear = [];
-  listGenre = [{code: "1", codeName: "Action"}];
+  listGenre = [{ code: '1', codeName: 'Action' }];
 
-  imageUrl: string = "";
+  imageUrl: string = '';
   altText: string = 'Uploaded Image';
   selectedImg: File | null = null;
-
 
   constructor(
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
     public adminProfileService: AdminProfileService,
     public toastService: ToastService
-  ) { 
+  ) {
     this.data = config.data;
   }
 
   async ngOnInit(): Promise<void> {
-    this.listReleaseYear = this.generateReleaseYearArray()
-    // let resutlInit = await this.adminProfileService.getInitMovieDetail();
-    // this.listCountry = resutlInit.listCountry;
-    // this.listGenre = resutlInit.listGenre;
-    // if (this.data?.id) {
-    //   this.adminProfileService.getMovieDetail(this.data.id).subscribe(response => {
-    //     this.movieDetail = response
-    //   })
-    // }
+    this.listReleaseYear = this.generateReleaseYearArray();
+    let resutlInit = await this.adminProfileService.getInitMovieDetail();
+    this.listCountry = resutlInit.listCountry;
+    this.listGenre = resutlInit.listGenre;
+    if (this.data) {
+      this.adminProfileService
+        .getMovieDetail(this.data)
+        .subscribe((response) => {
+          this.movieDetail = response;
+        });
+    }
   }
 
   ngAfterViewInit() {
@@ -67,7 +68,7 @@ export class MovieDetailComponent implements OnInit {
   setContent(content: string) {
     if (this.quillInstance) {
       this.quillInstance.clipboard.dangerouslyPasteHTML(content);
-    } 
+    }
   }
 
   generateReleaseYearArray() {
@@ -99,7 +100,7 @@ export class MovieDetailComponent implements OnInit {
   clearFileSelection(fileUpload: FileUpload) {
     fileUpload.clear();
     this.selectedImg = null;
-    this.imageUrl = "";
+    this.imageUrl = '';
   }
 
   onSave() {
@@ -108,33 +109,40 @@ export class MovieDetailComponent implements OnInit {
       return;
     }
     let param = {
-      id: this.movieDetail.id ? this.movieDetail.id : null,
+      id: this.movieDetail.id ? this.movieDetail.id : 0,
       movieName: this.movieDetail.movieName,
       country: this.movieDetail.country,
       releaseYear: this.movieDetail.releaseYear,
       genre: this.movieDetail.genre,
-      isShow: this.movieDetail.isShow.toString() == "1" ? true : false,
+      isShow: this.movieDetail.isShow,
       description: this.movieDetail.description,
-      img: this.imageUrl
-    }
-    console.log(param);
-    this.adminProfileService.save(param).subscribe(response => {
+      img: this.imageUrl,
+    };
+
+    this.adminProfileService.save(param).subscribe((response) => {
       if (response) {
-        this.toastService.showSuccess("Save successfully!");
+        this.toastService.showSuccess('Save successfully!');
         this.ref.close();
       }
-    })
+    });
   }
 
   validationMovieDetail() {
     this.showErrorMessage = false;
     this.errorMessages = [];
-    if (StringUtils.isEmpty(this.movieDetail.movieName) || StringUtils.isEmpty(this.movieDetail.country) || !this.movieDetail.genre || this.movieDetail.genre.length == 0 || StringUtils.isEmpty(this.movieDetail.description)) {
+    if (
+      StringUtils.isEmpty(this.movieDetail.movieName) ||
+      StringUtils.isEmpty(this.movieDetail.country) ||
+      !this.movieDetail.genre ||
+      this.movieDetail.genre.length == 0 ||
+      StringUtils.isEmpty(this.movieDetail.description) ||
+      StringUtils.isEmpty(this.movieDetail.isShow)
+    ) {
       this.showErrorMessage = true;
-      this.errorMessages.push("Please fill out all required field.");
+      this.errorMessages.push('Please fill out all required field.');
     }
 
-    if(this.showErrorMessage) {
+    if (this.showErrorMessage) {
       return this.showErrorMessage;
     }
     return this.showErrorMessage;
@@ -144,7 +152,5 @@ export class MovieDetailComponent implements OnInit {
     this.ref.close();
   }
 
-  onDelete() {
-  }
-
+  onDelete() {}
 }

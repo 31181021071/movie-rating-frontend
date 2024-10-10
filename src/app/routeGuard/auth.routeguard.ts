@@ -11,8 +11,8 @@ export class AuthActivateRouteGuard implements CanActivate {
     }
 
     canActivate(){
-        if(localStorage.getItem(AppConstants.JWT)){
-            this.user = JSON.parse(localStorage.getItem(AppConstants.USER_INFO));
+        if(sessionStorage.getItem(AppConstants.JWT)){
+            this.user = JSON.parse(sessionStorage.getItem(AppConstants.USER_INFO));
         }
         if(!this.user){
             this.router.navigateByUrl("/home");
