@@ -3,6 +3,8 @@ import { MovieSearchCondition } from 'src/app/models/admin-profile/admin-profile
 import { ShareDialogService } from 'src/app/services/common/dialog.service';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { AdminProfileService } from 'src/app/services/admin-profile/admin-profile.service';
+import { DatePipe } from '@angular/common';
+import { AppConstants } from 'src/app/constant/app.constants';
 
 @Component({
   selector: 'app-movie-management',
@@ -14,103 +16,102 @@ export class MovieManagementComponent implements OnInit {
   movieSearchCondition: MovieSearchCondition = {};
 
   listCountry = [];
-  listReleaseYear = [];
   listGenre = [];
   listIsShow = [
     {
-      code: true,
+      code: "1",
       codeName: "Show"
     },
     {
-      code: false,
+      code: "0",
       codeName: "Not Show"
     }
   ];
 
-  movieList = [
-    {
-      id: 1,
-      movieName: 'Inception',
-      country: 'USA',
-      releaseYear: 2010,
-      rating: 8.8,
-    },
-    {
-      id: 2,
-      movieName: 'Parasite',
-      country: 'South Korea',
-      releaseYear: 2019,
-      rating: 8.6,
-    },
-    {
-      id: 3,
-      movieName: 'The Shawshank Redemption',
-      country: 'USA',
-      releaseYear: 1994,
-      rating: 9.3,
-    },
-    {
-      id: 4,
-      movieName: 'Spirited Away',
-      country: 'Japan',
-      releaseYear: 2001,
-      rating: 8.6,
-    },
-    {
-      id: 5,
-      movieName: 'Amélie',
-      country: 'France',
-      releaseYear: 2001,
-      rating: 8.3,
-    },
-  ];
+  movieList = [];
 
   size = 50;
-  totalRecord = 200;
+  totalRecord = 0;
+  currentPage = 1;
 
   constructor(
     private dialogService: ShareDialogService,
     public adminProfileService: AdminProfileService,
+    public datePipe: DatePipe
   ){}
 
 
   async ngOnInit(): Promise<void> {
-    this.listReleaseYear = this.generateReleaseYearArray();
     let resutlInit = await this.adminProfileService.getInitMovieManagement();
     this.listCountry = resutlInit.listCountry;
     this.listGenre = resutlInit.listGenre;
   }
 
-  generateReleaseYearArray() {
-    const startYear = 1895;
-    const currentYear = new Date().getFullYear(); // Get the current year
-    const endYear = currentYear + 5; // Extend to 5 years in the future
-
-    // Generate the array of years from startYear to endYear
-    const years = [];
-    for (let year = startYear; year <= endYear; year++) {
-      years.push({ code: year, codeName: year });
-    }
-    return years;
-  }
-
   onSearch() {
-    console.log(this.movieSearchCondition);
+    const offset = 0;
+    const limit = this.size;
+    this.currentPage = 1;
+    let releaseDateFrom = this.datePipe.transform(this.movieSearchCondition.releaseDateFrom, AppConstants.DATE_FORMAT_YYYYMMDD);
+    let releaseDateTo = this.datePipe.transform(this.movieSearchCondition.releaseDateTo, AppConstants.DATE_FORMAT_YYYYMMDD);
+    let param = {
+      movieName: this.movieSearchCondition.movieName,
+      releaseDateFrom: releaseDateFrom,
+      releaseDateTo: releaseDateTo,
+      country: this.movieSearchCondition.country,
+      genre: this.movieSearchCondition.genre,
+      ratingFrom: this.movieSearchCondition.ratingFrom,
+      ratingTo: this.movieSearchCondition.ratingTo,
+      isShow: this.movieSearchCondition.isShow,
+      offset: offset,
+      limit: limit
+    }
+
+    this.adminProfileService.search(param).subscribe(result => {
+      if(result) {
+        this.totalRecord = result.totalRecord
+        this.movieList = result.movieList
+      }
+    })
   }
 
   onClear() {
     this.movieSearchCondition = {};
   }
 
-  openDialogDetail(movie?: any) {
+  openDialogDetail(id?: any) {
     let param = {
       title: "Movie Detail",
-      data: 1
+      data: id
     }
     this.dialogService.openDialog(MovieDetailComponent, param);
   }
 
   onChangePage(event: any) {
     console.log(event);
+    const offset = event.first;
+    const limit = event.rows;
+    this.currentPage = event.page + 1;
+
+    let releaseDateFrom = this.datePipe.transform(this.movieSearchCondition.releaseDateFrom, AppConstants.DATE_FORMAT_YYYYMMDD);
+    let releaseDateTo = this.datePipe.transform(this.movieSearchCondition.releaseDateTo, AppConstants.DATE_FORMAT_YYYYMMDD);
+    let param = {
+      movieName: this.movieSearchCondition.movieName,
+      releaseDateFrom: releaseDateFrom,
+      releaseDateTo: releaseDateTo,
+      country: this.movieSearchCondition.country,
+      genre: this.movieSearchCondition.genre,
+      ratingFrom: this.movieSearchCondition.ratingFrom,
+      ratingTo: this.movieSearchCondition.ratingTo,
+      isShow: this.movieSearchCondition.isShow,
+      offset: offset,
+      limit: limit
+    }
+
+    this.adminProfileService.search(param).subscribe(result => {
+      if(result) {
+        this.totalRecord = result.totalRecord
+        this.movieList = result.movieList
+      }
+    })
   }
 }

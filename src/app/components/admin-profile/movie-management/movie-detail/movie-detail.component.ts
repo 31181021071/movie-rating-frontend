@@ -1,8 +1,10 @@
+import { DatePipe } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Editor } from 'primeng/editor';
 import { FileUpload } from 'primeng/fileupload';
 import Quill from 'quill';
+import { AppConstants } from 'src/app/constant/app.constants';
 import { MovieDetail } from 'src/app/models/admin-profile/admin-profile.model';
 import { AdminProfileService } from 'src/app/services/admin-profile/admin-profile.service';
 import { ToastService } from 'src/app/services/common/toast.service';
@@ -25,7 +27,6 @@ export class MovieDetailComponent implements OnInit {
   errorMessages = [];
 
   listCountry = [{ code: '1', codeName: 'Vietnam' }];
-  listReleaseYear = [];
   listGenre = [{ code: '1', codeName: 'Action' }];
 
   imageUrl: string = '';
@@ -36,13 +37,13 @@ export class MovieDetailComponent implements OnInit {
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
     public adminProfileService: AdminProfileService,
-    public toastService: ToastService
+    public toastService: ToastService,
+    public datePipe: DatePipe
   ) {
     this.data = config.data;
   }
 
   async ngOnInit(): Promise<void> {
-    this.listReleaseYear = this.generateReleaseYearArray();
     let resutlInit = await this.adminProfileService.getInitMovieDetail();
     this.listCountry = resutlInit.listCountry;
     this.listGenre = resutlInit.listGenre;
@@ -50,7 +51,10 @@ export class MovieDetailComponent implements OnInit {
       this.adminProfileService
         .getMovieDetail(this.data)
         .subscribe((response) => {
+          this.imageUrl = response.img ? 'data:image/jpeg;base64,' + response.img : null;
           this.movieDetail = response;
+          this.movieDetail.img = this.imageUrl;
+          this.movieDetail.releaseDate = this.convertStringToDate(response.releaseDate);
         });
     }
   }
@@ -71,19 +75,6 @@ export class MovieDetailComponent implements OnInit {
     }
   }
 
-  generateReleaseYearArray() {
-    const startYear = 1895;
-    const currentYear = new Date().getFullYear(); // Get the current year
-    const endYear = currentYear + 5; // Extend to 5 years in the future
-
-    // Generate the array of years from startYear to endYear
-    const years = [];
-    for (let year = startYear; year <= endYear; year++) {
-      years.push({ code: year, codeName: year });
-    }
-    return years;
-  }
-
   onFileSelect(event: any) {
     this.selectedImg = event.files[0];
     const reader = new FileReader();
@@ -97,8 +88,7 @@ export class MovieDetailComponent implements OnInit {
     }
   }
 
-  clearFileSelection(fileUpload: FileUpload) {
-    fileUpload.clear();
+  clearFileSelection() {
     this.selectedImg = null;
     this.imageUrl = '';
   }
@@ -108,15 +98,16 @@ export class MovieDetailComponent implements OnInit {
     if (checkRequired) {
       return;
     }
+    let img = this.imageUrl.split(',')[1];
     let param = {
       id: this.movieDetail.id ? this.movieDetail.id : 0,
       movieName: this.movieDetail.movieName,
       country: this.movieDetail.country,
-      releaseYear: this.movieDetail.releaseYear,
+      releaseDate: this.datePipe.transform(this.movieDetail.releaseDate, AppConstants.DATE_FORMAT_YYYYMMDD),
       genre: this.movieDetail.genre,
       isShow: this.movieDetail.isShow,
       description: this.movieDetail.description,
-      img: this.imageUrl,
+      img: img,
     };
 
     this.adminProfileService.save(param).subscribe((response) => {
@@ -153,4 +144,9 @@ export class MovieDetailComponent implements OnInit {
   }
 
   onDelete() {}
+
+  convertStringToDate(dateString: string): Date {
+    const [year, month, day] = dateString.split('-').map(Number);
+    return new Date(year, month - 1, day);
+  }
 }

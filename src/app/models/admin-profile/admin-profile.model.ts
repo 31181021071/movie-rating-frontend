@@ -1,32 +1,35 @@
-export interface MovieSearchCondition {
+import { Pagination } from "../pagination.model";
+
+export interface MovieSearchCondition extends Pagination {
     movieName?: string;
     country?: string[];
-    releaseYear?: number[];
+    releaseDateFrom?: string;
+    releaseDateTo?: string;
     genre?: string[];
     ratingFrom?: number;
     ratingTo?: number;
-    isShow?: boolean[];
+    isShow?: string[];
 }
 
-export interface MovieSearchResult{
+export interface MovieSearchResult extends Pagination {
     id?: number;
     movieName?: string;
     country?: string;
-    releaseYear?: number;
+    releaseDate?: string;
     genre?: string;
     rating?: number;
-    isShow?: boolean;
+    isShow?: string;
 }
 
 export interface MovieDetail{
     id?: number;
-    img?: number[];
+    img?: string;
     movieName?: string;
     country?: string;
-    releaseYear?: number;
+    releaseDate?: Date;
     genre?: string[];
     rating?: number;
-    isShow?: boolean;
+    isShow?: string;
     description?: string;
 }
 

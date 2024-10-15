@@ -31,4 +31,8 @@ export class AdminProfileService {
   delete(param: any): Observable<any> {
     return this.apiService.doPostWithJwt(AppConstants.API_AUTHEN_URL + "admin-profile/movie-detail/delete", param);
   }
+
+  search(param : any): Observable<any> {
+    return this.apiService.doPostWithJwt(AppConstants.API_AUTHEN_URL + "admin-profile/movie-management/search", param);
+  }
 }

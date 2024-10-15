@@ -7,18 +7,18 @@
         <tr>
             <th class="w-2">Poster: </th>
             <td colspan="5">
-                <p-image *ngIf="imageUrl" [src]="imageUrl" [alt]="altText" width="250" height="400" [preview]="true"></p-image>
+                <p-image *ngIf="imageUrl" [src]="imageUrl" [alt]="altText" width="300" height="450" [preview]="true"></p-image>
                 <div class="flex flex-row align-items-center gap-3">
                     <p-fileUpload
+                    *ngIf="!imageUrl"
                     #fileUpload
                     name="file"
                     accept="image/*"
                     mode="basic"
                     (onSelect)="onFileSelect($event)"
                     chooseLabel="Choose image"
-                    cancelLabel="Cancel"
                     ></p-fileUpload>
-                    <p-button label="Clear" icon="pi pi-times" (click)="clearFileSelection(fileUpload)" severity="danger"></p-button>
+                    <p-button *ngIf="imageUrl" label="Clear" icon="pi pi-times" (click)="clearFileSelection()" severity="danger"></p-button>
                 </div>
             </td>
         </tr>
@@ -35,9 +35,9 @@
             </td>
         </tr>
         <tr>
-            <th class="w-2">Release Year: </th>
+            <th class="w-2">Release Date: </th>
             <td colspan="5">
-                <p-dropdown [options]="listReleaseYear" [(ngModel)]="movieDetail.releaseYear" [styleClass]="'w-full'" [filter]="true" filterBy="codeName" optionLabel="codeName" optionValue="code"></p-dropdown>
+                <p-calendar [styleClass]="'w-full'" [(ngModel)]="movieDetail.releaseDate" [showIcon]="true"></p-calendar>
             </td>
         </tr>
         <tr>
@@ -62,7 +62,7 @@
                 </div>
                 
                 <div class="flex align-items-center">
-                    <p-radioButton value="2" [(ngModel)]="movieDetail.isShow"></p-radioButton>
+                    <p-radioButton value="0" [(ngModel)]="movieDetail.isShow"></p-radioButton>
                     <label class="ml-2">No</label>
                 </div>
             </td>

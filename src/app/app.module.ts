@@ -37,6 +37,8 @@ import { EditorModule } from 'primeng/editor';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
+import { CalendarModule } from 'primeng/calendar';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { ImageModule } from 'primeng/image';
     MovieDetailComponent
   ],
   imports: [
+    CalendarModule,
     ImageModule,
     FileUploadModule,
     RadioButtonModule,
@@ -88,7 +91,8 @@ import { ImageModule } from 'primeng/image';
     DialogService,
     ConfirmationService,
     MessageService,
-    AuthActivateRouteGuard
+    AuthActivateRouteGuard,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

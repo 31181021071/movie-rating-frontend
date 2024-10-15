@@ -10,17 +10,20 @@
             filterBy="codeName" [showClear]="true" [(ngModel)]="movieSearchCondition.country" [styleClass]="'w-full'"></p-multiSelect>
         </div>
         <div class="field col-3">
-            <label for="releaseYear">Release year</label>            
-            <p-multiSelect id="releaseYear" [options]="listReleaseYear" optionLabel="codeName" optionValue="code" display="chip" [filter]="true"
-            filterBy="codeName" [showClear]="true" [(ngModel)]="movieSearchCondition.releaseYear" [styleClass]="'w-full'"></p-multiSelect>
+            <label for="releaseDateFrom">Release Date From</label>            
+            <p-calendar id="releaseDateFrom" [styleClass]="'w-full'" [(ngModel)]="movieSearchCondition.releaseDateFrom" [showIcon]="true"></p-calendar>
         </div>
+        <div class="field col-3">
+            <label for="releaseDateTo">Release Date To</label>            
+            <p-calendar id="releaseDateTo" [styleClass]="'w-full'" [(ngModel)]="movieSearchCondition.releaseDateTo" [showIcon]="true"></p-calendar>
+        </div>
+    </div>
+    <div class="formgrid grid">
         <div class="field col-3">
             <label for="genre">Genre</label>            
             <p-multiSelect id="genre" [options]="listGenre" optionLabel="codeName" optionValue="code" display="chip" [filter]="true"
             filterBy="codeName" [showClear]="true" [(ngModel)]="movieSearchCondition.genre" [styleClass]="'w-full'"></p-multiSelect>
         </div>
-    </div>
-    <div class="formgrid grid">
         <div class="field col-3">
             <label for="ratingFrom">Rating From</label>
             <p-inputNumber id="ratingFrom" styleClass="w-full" class="w-full" [(ngModel)]="movieSearchCondition.ratingFrom" inputId="minmax" mode="decimal" [min]="0" [max]="10" [maxFractionDigits]="1"> </p-inputNumber>
@@ -64,9 +67,9 @@
                     <td style="width: 20%;">{{movie.movieName}}</td>
                     <td style="width: 30%;">{{movie.genre}}</td>
                     <td style="width: 10%;">{{movie.country}}</td>
-                    <td style="width: 10%;">{{movie.releaseYear}}</td>
+                    <td style="width: 10%;">{{movie.releaseDate}}</td>
                     <td style="width: 10%;">{{movie.rating}}</td>
-                    <td style="width: 10%;"><button type="button" (click)="openDialogDetail(movie)" pButton icon="pi pi-pencil" label="Edit"></button></td>
+                    <td style="width: 10%;"><button type="button" (click)="openDialogDetail(movie.id)" pButton icon="pi pi-pencil" label="Edit"></button></td>
                 </tr>
             </ng-template>
         </p-table>
