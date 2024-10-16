@@ -17,6 +17,16 @@
                     <app-movie-management></app-movie-management>
                 </ng-container>
             </p-tabPanel>
+            <p-tabPanel header="Director Management">
+                <ng-container *ngIf="activeTab === 3">
+                    <app-director-management></app-director-management>
+                </ng-container>
+            </p-tabPanel>
+            <p-tabPanel header="Actor Management">
+                <ng-container *ngIf="activeTab === 4">
+                    <app-actor-management></app-actor-management>
+                </ng-container>
+            </p-tabPanel>
         </p-tabView>
     </div>
 </div>

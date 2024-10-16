@@ -9,6 +9,8 @@ export interface MovieSearchCondition extends Pagination {
     ratingFrom?: number;
     ratingTo?: number;
     isShow?: string[];
+    director?: string[];
+    actor?: string[];
 }
 
 export interface MovieSearchResult extends Pagination {
@@ -30,6 +32,54 @@ export interface MovieDetail{
     genre?: string[];
     rating?: number;
     isShow?: string;
+    description?: string;
+    director?: string[];
+    actor?: string[];
+}
+
+export interface DirectorSearchCondition extends Pagination {
+    name?: string;
+    country?: string[];
+    birthFrom?: string;
+    birthTo?: string;
+}
+
+export interface DirectorSearchResult extends Pagination {
+    id?: number;
+    name?: string;
+    country?: string;
+    birth?: string;
+}
+
+export interface DirectorDetail{
+    id?: number;
+    img?: string;
+    name?: string;
+    country?: string;
+    birth?: Date;
+    description?: string;
+}
+
+export interface ActorSearchCondition extends Pagination {
+    name?: string;
+    country?: string[];
+    birthFrom?: string;
+    birthTo?: string;
+}
+
+export interface ActorSearchResult extends Pagination {
+    id?: number;
+    name?: string;
+    country?: string;
+    birth?: string;
+}
+
+export interface ActorDetail{
+    id?: number;
+    img?: string;
+    name?: string;
+    country?: string;
+    birth?: Date;
     description?: string;
 }
 

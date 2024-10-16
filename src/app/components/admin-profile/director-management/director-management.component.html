@@ -1,0 +1,54 @@
+<div>
+    <div class="formgrid grid">
+        <div class="field col-3">
+            <label for="movieName">Movie name</label>
+            <input id="movieName" type="text" pInputText [(ngModel)]="directorSearchCondition.name" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+        <div class="field col-3">
+            <label for="country">Country</label>
+            <p-multiSelect id="country" [options]="listCountry" optionLabel="codeName" optionValue="code" display="chip" [filter]="true"
+            filterBy="codeName" [showClear]="true" [(ngModel)]="directorSearchCondition.country" [styleClass]="'w-full'"></p-multiSelect>
+        </div>
+        <div class="field col-3">
+            <label for="releaseDateFrom">Release Date From</label>            
+            <p-calendar id="releaseDateFrom" [styleClass]="'w-full'" [(ngModel)]="directorSearchCondition.birthFrom" [showIcon]="true"></p-calendar>
+        </div>
+        <div class="field col-3">
+            <label for="releaseDateTo">Release Date To</label>            
+            <p-calendar id="releaseDateTo" [styleClass]="'w-full'" [(ngModel)]="directorSearchCondition.birthTo" [showIcon]="true"></p-calendar>
+        </div>
+    </div>
+    <div class="flex flex-row flex-wrap justify-content-center gap-3">
+        <p-button label="Search" severity="primary" (onClick)="onSearch()" icon="pi pi-search"></p-button>
+        <p-button label="Clear" severity="danger" (onClick)="onClear()" icon="pi pi-times"></p-button>
+    </div>
+</div>
+<div>
+    <div class="flex flex-row flex-wrap justify-content-between">
+        <p-paginator [rows]="size" [totalRecords]="totalRecord" (onPageChange)="onChangePage($event)"></p-paginator>
+        <p-button label="New" severity="primary" (onClick)="openDialogDetail()" icon="pi pi-plus-circle"></p-button>
+    </div>
+    <div>
+        <p-table [value]="directorList" [tableStyle]="{'min-width': '50rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 10%;">ID</th>
+                    <th style="width: 30%;">Name</th>
+                    <th style="width: 30%;">Country</th>
+                    <th style="width: 20%;">Birth</th>
+                    <th style="width: 10%;">Action</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-director>
+                <tr>
+                    <td style="width: 10%;">{{director.id}}</td>
+                    <td style="width: 30%;">{{director.name}}</td>
+                    <td style="width: 30%;">{{director.country}}</td>
+                    <td style="width: 20%;">{{director.birth}}</td>
+                    <td style="width: 10%;"><button type="button" (click)="openDialogDetail(director.id)" pButton icon="pi pi-pencil" label="Edit"></button></td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+

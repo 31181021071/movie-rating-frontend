@@ -1,38 +1,48 @@
 <div>
     <div class="formgrid grid">
-        <div class="field col-3">
+        <div class="field col-2">
             <label for="movieName">Movie name</label>
             <input id="movieName" type="text" pInputText [(ngModel)]="movieSearchCondition.movieName" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
         </div>
-        <div class="field col-3">
+        <div class="field col-2">
             <label for="country">Country</label>
             <p-multiSelect id="country" [options]="listCountry" optionLabel="codeName" optionValue="code" display="chip" [filter]="true"
             filterBy="codeName" [showClear]="true" [(ngModel)]="movieSearchCondition.country" [styleClass]="'w-full'"></p-multiSelect>
         </div>
-        <div class="field col-3">
+        <div class="field col-2">
             <label for="releaseDateFrom">Release Date From</label>            
             <p-calendar id="releaseDateFrom" [styleClass]="'w-full'" [(ngModel)]="movieSearchCondition.releaseDateFrom" [showIcon]="true"></p-calendar>
         </div>
-        <div class="field col-3">
+        <div class="field col-2">
             <label for="releaseDateTo">Release Date To</label>            
             <p-calendar id="releaseDateTo" [styleClass]="'w-full'" [(ngModel)]="movieSearchCondition.releaseDateTo" [showIcon]="true"></p-calendar>
         </div>
+        <div class="field col-2">
+            <label for="director">Director</label>
+            <p-multiSelect id="director" [options]="listDirector" optionLabel="codeName" optionValue="code" display="chip" [filter]="true"
+            filterBy="codeName" [showClear]="true" [(ngModel)]="movieSearchCondition.director" [styleClass]="'w-full'"></p-multiSelect>
+        </div>
+        <div class="field col-2">
+            <label for="actor">Actor</label>
+            <p-multiSelect id="actor" [options]="listActor" optionLabel="codeName" optionValue="code" display="chip" [filter]="true"
+            filterBy="codeName" [showClear]="true" [(ngModel)]="movieSearchCondition.actor" [styleClass]="'w-full'"></p-multiSelect>
+        </div>
     </div>
     <div class="formgrid grid">
-        <div class="field col-3">
+        <div class="field col-2">
             <label for="genre">Genre</label>            
             <p-multiSelect id="genre" [options]="listGenre" optionLabel="codeName" optionValue="code" display="chip" [filter]="true"
             filterBy="codeName" [showClear]="true" [(ngModel)]="movieSearchCondition.genre" [styleClass]="'w-full'"></p-multiSelect>
         </div>
-        <div class="field col-3">
+        <div class="field col-2">
             <label for="ratingFrom">Rating From</label>
             <p-inputNumber id="ratingFrom" styleClass="w-full" class="w-full" [(ngModel)]="movieSearchCondition.ratingFrom" inputId="minmax" mode="decimal" [min]="0" [max]="10" [maxFractionDigits]="1"> </p-inputNumber>
         </div>
-        <div class="field col-3">
+        <div class="field col-2">
             <label for="ratingTo">Rating To</label>
             <p-inputNumber id="ratingTo" styleClass="w-full" class="w-full" [(ngModel)]="movieSearchCondition.ratingTo" inputId="minmax" mode="decimal" [min]="0" [max]="10" [maxFractionDigits]="1"> </p-inputNumber>
         </div>
-        <div class="field col-3">
+        <div class="field col-2">
             <label for="isShow">Is Show</label>            
             <p-multiSelect id="isShow" [options]="listIsShow" optionLabel="codeName" optionValue="code" display="chip" [filter]="true"
             filterBy="codeName" [showClear]="true" [(ngModel)]="movieSearchCondition.isShow" [styleClass]="'w-full'"></p-multiSelect>

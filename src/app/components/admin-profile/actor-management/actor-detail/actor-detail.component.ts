@@ -2,35 +2,31 @@ import { DatePipe } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Editor } from 'primeng/editor';
-import { FileUpload } from 'primeng/fileupload';
 import Quill from 'quill';
 import { AppConstants } from 'src/app/constant/app.constants';
-import { MovieDetail } from 'src/app/models/admin-profile/admin-profile.model';
+import { ActorDetail } from 'src/app/models/admin-profile/admin-profile.model';
 import { Mcodes } from 'src/app/models/mcodes.model';
 import { AdminProfileService } from 'src/app/services/admin-profile/admin-profile.service';
 import { ToastService } from 'src/app/services/common/toast.service';
 import { StringUtils } from 'src/app/utils/stringUtil';
 
 @Component({
-  selector: 'app-movie-detail',
-  templateUrl: './movie-detail.component.html',
-  styleUrls: ['./movie-detail.component.scss'],
+  selector: 'app-actor-detail',
+  templateUrl: './actor-detail.component.html',
+  styleUrls: ['./actor-detail.component.scss']
 })
-export class MovieDetailComponent implements OnInit {
+export class ActorDetailComponent implements OnInit {
   @ViewChild('editor', { static: false }) editor!: ElementRef;
   @ViewChild('quillEditor', { static: false }) quillEditor!: Editor;
   quillInstance: Quill | undefined;
 
   data: any;
-  movieDetail: MovieDetail = {};
+  actorDetail: ActorDetail = {};
 
   showErrorMessage = false;
   errorMessages = [];
 
   listCountry: Mcodes[] = [];
-  listGenre: Mcodes[] = [];
-  listDirector: Mcodes[] = [];
-  listActor: Mcodes[] = [];
 
   imageUrl: string = '';
   altText: string = 'Uploaded Image';
@@ -47,17 +43,16 @@ export class MovieDetailComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    let resutlInit = await this.adminProfileService.getInitMovieDetail();
+    let resutlInit = await this.adminProfileService.getInitActorDetail();
     this.listCountry = resutlInit.listCountry;
-    this.listGenre = resutlInit.listGenre;
     if (this.data) {
       this.adminProfileService
-        .getMovieDetail(this.data)
+        .getActorDetail(this.data)
         .subscribe((response) => {
           this.imageUrl = response.img ? 'data:image/jpeg;base64,' + response.img : null;
-          this.movieDetail = response;
-          this.movieDetail.img = this.imageUrl;
-          this.movieDetail.releaseDate = this.convertStringToDate(response.releaseDate);
+          this.actorDetail = response;
+          this.actorDetail.img = this.imageUrl;
+          this.actorDetail.birth = this.convertStringToDate(response.birth);
         });
     }
   }
@@ -68,7 +63,7 @@ export class MovieDetailComponent implements OnInit {
       if (this.quillEditor && this.quillEditor.getQuill()) {
         this.quillInstance = this.quillEditor.getQuill();
       }
-      this.setContent(this.movieDetail.description);
+      this.setContent(this.actorDetail.description);
     }, 500);
   }
 
@@ -97,23 +92,21 @@ export class MovieDetailComponent implements OnInit {
   }
 
   onSave() {
-    let checkRequired = this.validationMovieDetail();
+    let checkRequired = this.validationActorDetail();
     if (checkRequired) {
       return;
     }
     let img = this.imageUrl.split(',')[1];
     let param = {
-      id: this.movieDetail.id ? this.movieDetail.id : 0,
-      movieName: this.movieDetail.movieName,
-      country: this.movieDetail.country,
-      releaseDate: this.datePipe.transform(this.movieDetail.releaseDate, AppConstants.DATE_FORMAT_YYYYMMDD),
-      genre: this.movieDetail.genre,
-      isShow: this.movieDetail.isShow,
-      description: this.movieDetail.description,
+      id: this.actorDetail.id ? this.actorDetail.id : 0,
+      name: this.actorDetail.name,
+      country: this.actorDetail.country,
+      birth: this.datePipe.transform(this.actorDetail.birth, AppConstants.DATE_FORMAT_YYYYMMDD),
+      description: this.actorDetail.description,
       img: img,
     };
 
-    this.adminProfileService.saveMovie(param).subscribe((response) => {
+    this.adminProfileService.saveActor(param).subscribe((response) => {
       if (response) {
         this.toastService.showSuccess('Save successfully!');
         this.ref.close(response);
@@ -121,16 +114,13 @@ export class MovieDetailComponent implements OnInit {
     });
   }
 
-  validationMovieDetail() {
+  validationActorDetail() {
     this.showErrorMessage = false;
     this.errorMessages = [];
     if (
-      StringUtils.isEmpty(this.movieDetail.movieName) ||
-      StringUtils.isEmpty(this.movieDetail.country) ||
-      !this.movieDetail.genre ||
-      this.movieDetail.genre.length == 0 ||
-      StringUtils.isEmpty(this.movieDetail.description) ||
-      StringUtils.isEmpty(this.movieDetail.isShow)
+      StringUtils.isEmpty(this.actorDetail.name) ||
+      StringUtils.isEmpty(this.actorDetail.country) ||
+      StringUtils.isEmpty(this.actorDetail.description)
     ) {
       this.showErrorMessage = true;
       this.errorMessages.push('Please fill out all required field.');

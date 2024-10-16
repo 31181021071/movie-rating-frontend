@@ -41,6 +41,20 @@
             </td>
         </tr>
         <tr>
+            <th class="w-2">Director<span class="required">*</span>: </th>
+            <td colspan="5">
+                <p-multiSelect [options]="listDirector" optionLabel="codeName" optionValue="code" display="chip" [filter]="true"
+                filterBy="codeName" [showClear]="true" [(ngModel)]="movieDetail.director" [styleClass]="'w-full'"></p-multiSelect>
+            </td>
+        </tr>
+        <tr>
+            <th class="w-2">Actor<span class="required">*</span>: </th>
+            <td colspan="5">
+                <p-multiSelect [options]="listActor" optionLabel="codeName" optionValue="code" display="chip" [filter]="true"
+                filterBy="codeName" [showClear]="true" [(ngModel)]="movieDetail.actor" [styleClass]="'w-full'"></p-multiSelect>
+            </td>
+        </tr>
+        <tr>
             <th class="w-2">Genre<span class="required">*</span>: </th>
             <td colspan="5">
                 <p-multiSelect [options]="listGenre" optionLabel="codeName" optionValue="code" display="chip" [filter]="true"

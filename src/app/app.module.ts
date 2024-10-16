@@ -39,6 +39,10 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
 import { CalendarModule } from 'primeng/calendar';
 import { DatePipe } from '@angular/common';
+import { DirectorManagementComponent } from './components/admin-profile/director-management/director-management.component';
+import { DirectorDetailComponent } from './components/admin-profile/director-management/director-detail/director-detail.component';
+import { ActorManagementComponent } from './components/admin-profile/actor-management/actor-management.component';
+import { ActorDetailComponent } from './components/admin-profile/actor-management/actor-detail/actor-detail.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +54,11 @@ import { DatePipe } from '@angular/common';
     UserProfileComponent,
     AdminProfileComponent,
     MovieManagementComponent,
-    MovieDetailComponent
+    MovieDetailComponent,
+    DirectorManagementComponent,
+    DirectorDetailComponent,
+    ActorManagementComponent,
+    ActorDetailComponent
   ],
   imports: [
     CalendarModule,

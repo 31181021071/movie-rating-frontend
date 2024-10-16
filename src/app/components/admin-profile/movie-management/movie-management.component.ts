@@ -5,6 +5,7 @@ import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { AdminProfileService } from 'src/app/services/admin-profile/admin-profile.service';
 import { DatePipe } from '@angular/common';
 import { AppConstants } from 'src/app/constant/app.constants';
+import { Mcodes } from 'src/app/models/mcodes.model';
 
 @Component({
   selector: 'app-movie-management',
@@ -15,9 +16,11 @@ export class MovieManagementComponent implements OnInit {
 
   movieSearchCondition: MovieSearchCondition = {};
 
-  listCountry = [];
-  listGenre = [];
-  listIsShow = [
+  listCountry: Mcodes[] = [];
+  listGenre: Mcodes[] = [];
+  listDirector: Mcodes[] = [];
+  listActor: Mcodes[] = [];
+  listIsShow: Mcodes[] = [
     {
       code: "1",
       codeName: "Show"
@@ -51,27 +54,8 @@ export class MovieManagementComponent implements OnInit {
     const offset = 0;
     const limit = this.size;
     this.currentPage = 1;
-    let releaseDateFrom = this.datePipe.transform(this.movieSearchCondition.releaseDateFrom, AppConstants.DATE_FORMAT_YYYYMMDD);
-    let releaseDateTo = this.datePipe.transform(this.movieSearchCondition.releaseDateTo, AppConstants.DATE_FORMAT_YYYYMMDD);
-    let param = {
-      movieName: this.movieSearchCondition.movieName,
-      releaseDateFrom: releaseDateFrom,
-      releaseDateTo: releaseDateTo,
-      country: this.movieSearchCondition.country,
-      genre: this.movieSearchCondition.genre,
-      ratingFrom: this.movieSearchCondition.ratingFrom,
-      ratingTo: this.movieSearchCondition.ratingTo,
-      isShow: this.movieSearchCondition.isShow,
-      offset: offset,
-      limit: limit
-    }
-
-    this.adminProfileService.search(param).subscribe(result => {
-      if(result) {
-        this.totalRecord = result.totalRecord
-        this.movieList = result.movieList
-      }
-    })
+    
+    this.search(offset, limit);
   }
 
   onClear() {
@@ -83,7 +67,14 @@ export class MovieManagementComponent implements OnInit {
       title: "Movie Detail",
       data: id
     }
-    this.dialogService.openDialog(MovieDetailComponent, param);
+    this.dialogService.openDialog(MovieDetailComponent, param).onClose.subscribe(data => {
+      if (data) {
+        const offset = 0;
+        const limit = this.size;
+        this.currentPage = 1;
+        this.search(offset, limit);
+      }
+    });
   }
 
   onChangePage(event: any) {
@@ -92,6 +83,10 @@ export class MovieManagementComponent implements OnInit {
     const limit = event.rows;
     this.currentPage = event.page + 1;
 
+    this.search(offset, limit);
+  }
+
+  search(offset: any, limit: any) {
     let releaseDateFrom = this.datePipe.transform(this.movieSearchCondition.releaseDateFrom, AppConstants.DATE_FORMAT_YYYYMMDD);
     let releaseDateTo = this.datePipe.transform(this.movieSearchCondition.releaseDateTo, AppConstants.DATE_FORMAT_YYYYMMDD);
     let param = {
@@ -103,11 +98,13 @@ export class MovieManagementComponent implements OnInit {
       ratingFrom: this.movieSearchCondition.ratingFrom,
       ratingTo: this.movieSearchCondition.ratingTo,
       isShow: this.movieSearchCondition.isShow,
+      director: this.movieSearchCondition.director,
+      actor: this.movieSearchCondition.actor,
       offset: offset,
       limit: limit
     }
 
-    this.adminProfileService.search(param).subscribe(result => {
+    this.adminProfileService.searchMovie(param).subscribe(result => {
       if(result) {
         this.totalRecord = result.totalRecord
         this.movieList = result.movieList
